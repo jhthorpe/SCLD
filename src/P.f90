@@ -19,9 +19,14 @@ real(kind=8) function P_Eb_nodpl(enr,b,g,mss)
   real(kind=8) :: pi
   real(kind=8), intent(in) :: enr,b,g,mss
   pi = 3.1415926535897932
-  P_Eb_nodpl = 1.d0/(1.d0 + exp(-1.d0*pi*sqrt(mss)* &
-                        (g**2.d0/(enr**0.5d0*b**3.d0) &
-                         - 0.5d0*enr**0.5d0*b*g) ) )
+!  P_Eb_nodpl = 1.d0/(1.d0 + exp(-1.d0*pi*sqrt(mss)* &
+!                        (g/(enr**0.5d0*b**3.d0) &
+!                         - 0.5d0*enr**0.5d0*b) ) )
+  P_Eb_nodpl = 1.d0/(1.d0 + exp(pi*sqrt(mss)*&
+               (0.5d0*b*enr**0.5d0 - g/(b**3.d0*enr**0.5d0))))
+!  P_Eb_nodpl = 1.d0/(1.d0 + exp(-1.d0*pi*sqrt(mss)* &
+!                        (g**2.d0/(enr**0.5d0*b**3.d0) &
+!                         - 0.5d0*enr**0.5d0*b*g) ) )
 end function P_Eb_nodpl
 !---------------------------------------------------------------------
 
@@ -40,7 +45,7 @@ real(kind=8) function P_E_nodpl(enr,bc,g,mss)
   real(kind=8) :: temp,b,db
   integer :: nb,i
   pi = 3.1415926535897932
-  nb = 1d5 
+  nb = 1d5
   temp = 0.d0
   db = bc/nb
   do i=0,nb-1
